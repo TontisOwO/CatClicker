@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ButtonScript : MonoBehaviour
 {
@@ -70,6 +69,5 @@ public class ButtonScript : MonoBehaviour
             currentsize.y = Mathf.Lerp(currentsize.y, originalSize.y, squishValue);
         }
         squish = new Vector2(originalSize.x + squishness, originalSize.y - squishness);
-
     }
 }
