@@ -1,8 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonScript : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI Counter;
+    [SerializeField] Counting counting;
     SpriteRenderer sprite;
     Color originalColor;
     Color slightlyDarker = new Color (0.1f, 0.1f, 0.1f, 0f);
@@ -23,6 +26,13 @@ public class ButtonScript : MonoBehaviour
         originalSize = position.localScale;
         currentsize = position.localScale;
     }
+    private void OnMouseEnter()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+
+        }
+    }
     private void OnMouseOver()
     {
         over = true;
@@ -37,6 +47,12 @@ public class ButtonScript : MonoBehaviour
             currentsize.x = Mathf.Lerp(currentsize.x, originalSize.x, squishValue);
             currentsize.y = Mathf.Lerp (currentsize.y, originalSize.y, squishValue);
 
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            counting.count += 1 * counting.multipierValue;
+            counting.displayedNumber = Mathf.FloorToInt(counting.count);
+            Counter.text = "Pumpkins and Hearts: " + counting.displayedNumber;
         }
     }
     private void OnMouseExit()
