@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour
 {
+    //OBS:This code does *not* work on UI elements!!! >:(
+
     [SerializeField] TextMeshProUGUI Counter;
     [SerializeField] Counting counting;
     SpriteRenderer sprite;
@@ -25,13 +27,7 @@ public class ButtonScript : MonoBehaviour
         originalSize = position.localScale;
         currentsize = position.localScale;
     }
-    private void OnMouseEnter()
-    {
-        if (Input.GetKey(KeyCode.Space))
-        {
-
-        }
-    }
+    
     private void OnMouseOver()
     {
         over = true;
@@ -50,8 +46,6 @@ public class ButtonScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             counting.count += 1 * counting.multipierValue;
-            counting.displayedNumber = Mathf.FloorToInt(counting.count);
-            Counter.text = "Pumpkins and Hearts: " + counting.displayedNumber;
         }
     }
     private void OnMouseExit()
@@ -69,5 +63,13 @@ public class ButtonScript : MonoBehaviour
             currentsize.y = Mathf.Lerp(currentsize.y, originalSize.y, squishValue);
         }
         squish = new Vector2(originalSize.x + squishness, originalSize.y - squishness);
+
+        if (counting.displayedNumber != Mathf.FloorToInt(counting.count))
+        {
+            counting.displayedNumber = Mathf.FloorToInt(counting.count);
+            Counter.text = "Pumpkins and Hearts: " + counting.displayedNumber;
+
+        }
+            
     }
 }

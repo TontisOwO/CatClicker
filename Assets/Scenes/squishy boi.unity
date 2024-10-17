@@ -629,7 +629,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Pumpkins and Hearts:
+  m_text: 'Pumpkins and Hearts: 0
+
 
 '
   m_isRightToLeft: 0
