@@ -9,8 +9,8 @@ public class InfernalMagic : MonoBehaviour
     public static extern int MessageBox(IntPtr hWnd, string text, string caption, uint type);
 
     [DllImport("user32.dll")]
-    private static extern IntPtr GetActiveScreen();
-    private struct MARGINS
+    private static extern IntPtr GetActiveWindow();
+    private struct Margins
     {
         public int cxLeftWidth;
         public int cxRightWidth;
@@ -19,10 +19,16 @@ public class InfernalMagic : MonoBehaviour
     }
 
     [DllImport("Dwmapi.dll")]
-    private static extern uint DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS margins);
+    private static extern uint DwmExtendFrameIntoClientArea(IntPtr hWnd, ref Margins margins);
 
     private void Start()
     {
         MessageBox(new IntPtr(0), "Hello World", "Hello Windows", 0);
+
+        IntPtr hWnd = GetActiveWindow();
+
+        Margins margins = new Margins { cxLeftWidth = -1};
+        DwmExtendFrameIntoClientArea (hWnd, ref margins);
     }
+
 }
