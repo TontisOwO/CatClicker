@@ -8,7 +8,7 @@ public class PotionBuy
 {
     public void BuyPotion()
     {
-    If 
+    
         Debug.Log("Potion bought!");
 
     }
