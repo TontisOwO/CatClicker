@@ -12,7 +12,6 @@ public class ButtonScript : MonoBehaviour
     Color slightlyDarker = new Color (0.1f, 0.1f, 0.1f, 0f);
     Transform position;
     [SerializeField] float squishness = 0.1f;
-    Vector2 squish;
     Vector2 originalSize;
     Vector2 currentsize;
     [SerializeField] float squishValue = 0.1f;
@@ -34,13 +33,11 @@ public class ButtonScript : MonoBehaviour
         sprite.color = originalColor - slightlyDarker;
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            currentsize.x = Mathf.Lerp(currentsize.x, originalSize.x * squish.x, squishValue);
-            currentsize.y = Mathf.Lerp(currentsize.y, originalSize.y * squish.y, squishValue);
+            Squish(squishness);
         }
         else 
         {
-            currentsize.x = Mathf.Lerp(currentsize.x, originalSize.x, squishValue);
-            currentsize.y = Mathf.Lerp (currentsize.y, originalSize.y, squishValue);
+            Squish(0);
 
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -59,10 +56,8 @@ public class ButtonScript : MonoBehaviour
         position.localScale = currentsize;
         if ( !over )
         {
-            currentsize.x = Mathf.Lerp(currentsize.x, originalSize.x, squishValue);
-            currentsize.y = Mathf.Lerp(currentsize.y, originalSize.y, squishValue);
+            Squish(0);
         }
-        squish = new Vector2(originalSize.x + squishness, originalSize.y - squishness);
 
         if (counting.displayedNumber != Mathf.FloorToInt(counting.count))
         {
@@ -71,5 +66,10 @@ public class ButtonScript : MonoBehaviour
 
         }
             
+    }
+    void Squish(float squishModifier)
+    {
+        currentsize.x = Mathf.Lerp(currentsize.x, originalSize.x + squishModifier, squishValue);
+        currentsize.y = Mathf.Lerp(currentsize.y, originalSize.y - squishModifier, squishValue);
     }
 }
