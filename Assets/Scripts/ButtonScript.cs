@@ -1,5 +1,7 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ButtonScript : MonoBehaviour
 {
@@ -11,16 +13,20 @@ public class ButtonScript : MonoBehaviour
     Color originalColor;
     Color slightlyDarker = new Color (0.1f, 0.1f, 0.1f, 0f);
     Transform position;
+    Rigidbody2D myRigidbody2D;
     [SerializeField] float squishness = 0.1f;
     Vector2 originalSize;
     Vector2 currentsize;
+    Vector2 mousePos;
     [SerializeField] float squishValue = 0.1f;
     bool over;
+    bool clicking;
 
     private void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
         position = GetComponent<Transform>();
+        myRigidbody2D = GetComponent<Rigidbody2D>();
         
         originalColor = sprite.color;
         originalSize = position.localScale;
@@ -34,6 +40,7 @@ public class ButtonScript : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse0))
         {
             Squish(squishness);
+            clicking = true;
         }
         else 
         {
@@ -54,9 +61,20 @@ public class ButtonScript : MonoBehaviour
     private void Update()
     {
         position.localScale = currentsize;
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            clicking = false;
+
+        }
         if ( !over )
         {
             Squish(0);
+        }
+        if( clicking )
+        {
+            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            position.position = new Vector2(mousePos.x, mousePos.y);
+            myRigidbody2D.linearVelocity = Vector2.zero;
         }
 
         if (counting.displayedNumber != Mathf.FloorToInt(counting.count))
@@ -64,6 +82,10 @@ public class ButtonScript : MonoBehaviour
             counting.displayedNumber = Mathf.FloorToInt(counting.count);
             Counter.text = "Pumpkins and Hearts: " + counting.displayedNumber;
 
+        }
+        if (transform.position.y <= -10)
+        {
+            transform.position = new Vector2(transform.position.x,10);
         }
             
     }

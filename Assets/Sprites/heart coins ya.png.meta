@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      heart coins ya_0: 7410351134047407660
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
