@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Counting
   m_EditorClassIdentifier: 
   count: 0
-  displayedNumber: 0
+  displayedNumber: 1
   multipierValue: 1
