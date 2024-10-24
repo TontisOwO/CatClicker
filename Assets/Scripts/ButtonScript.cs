@@ -19,6 +19,7 @@ public class ButtonScript : MonoBehaviour
 
     [SerializeField] float squishness = 0.1f;
     [SerializeField] float squishValue = 0.1f;
+    [SerializeField] float pickUpDelay = 0.2f;
     float time;
 
     Vector2 originalSize;
@@ -46,7 +47,7 @@ public class ButtonScript : MonoBehaviour
         {
             Squish(squishness);
             time += Time.deltaTime;
-            if (time > 0.2f)
+            if (time > pickUpDelay)
             {
                 clicking = true;
             }
