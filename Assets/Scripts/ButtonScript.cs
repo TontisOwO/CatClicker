@@ -4,6 +4,7 @@ using UnityEngine;
 public class ButtonScript : MonoBehaviour
 {
     //OBS:This code does *not* work on UI elements!!! >:(
+    //This is an amalgamation of code by Anton and Azure
 
     [SerializeField] TextMeshProUGUI Counter;
     [SerializeField] Counting counting;
