@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 94f0007b91a3f4a4da7bb74f119a8e43
+guid: 9189511d500f5d047b92f72355e66a28
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7410351134047407660
-    second: heart coins ya_0
+      213: -1455096403836856330
+    second: image (2)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: heart coins ya_0
+      name: image (2)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 576
-        height: 560
+        x: 236
+        y: 122
+        width: 2345
+        height: 2684
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c2e0fcd381bd6d660800000000000000
-      internalID: 7410351134047407660
+      spriteID: 6f71b57b7857ecbe0800000000000000
+      internalID: -1455096403836856330
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      heart coins ya_0: 7410351134047407660
+      image (2)_0: -1455096403836856330
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
