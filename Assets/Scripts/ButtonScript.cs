@@ -20,7 +20,8 @@ public class ButtonScript : MonoBehaviour
     [SerializeField] float squishness = 0.1f;
     [SerializeField] float squishValue = 0.1f;
     [SerializeField] float pickUpDelay = 0.2f;
-    float time;
+    [SerializeField] float yeet = 2.0f;
+    [SerializeField]float time;
 
     Vector2 originalSize;
     Vector2 currentsize;
@@ -75,6 +76,11 @@ public class ButtonScript : MonoBehaviour
         position.localScale = currentsize;
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
+            if (clicking)
+            {
+                mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                myRigidbody2D.linearVelocity = new Vector2((mousePos.x - position.position.x) * yeet, (mousePos.y - position.position.y) * yeet);
+            }
             clicking = false;
             time = 0;
         }
@@ -85,7 +91,7 @@ public class ButtonScript : MonoBehaviour
         if( clicking )
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            position.position = new Vector2(mousePos.x, mousePos.y);
+            position.position = mousePos;
             myRigidbody2D.linearVelocity = Vector2.zero;
         }
 
@@ -95,9 +101,17 @@ public class ButtonScript : MonoBehaviour
             Counter.text = "Pumpkins and Hearts: " + counting.displayedNumber;
 
         }
-        if (transform.position.y <= -10)
+        if (position.position.y <= -10)
         {
-            transform.position = new Vector2(transform.position.x,10);
+            position.position = new Vector2(transform.position.x,10);
+        }
+        if (position.position.x >= 10)
+        {
+            position.position = new Vector2(-8.7f, position.position.y);
+        }
+        if (position.position.x <= -10)
+        {
+            position.position = new Vector2(8.7f, position.position.y);
         }
             
     }

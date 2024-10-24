@@ -273,6 +273,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -398,6 +399,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72865aaeed6d3d54c82414ff4e45b283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &554698604
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,6 +495,8 @@ MonoBehaviour:
   heartRelease: {fileID: 1133927089}
   squishness: 0.1
   squishValue: 0.1
+  pickUpDelay: 0.12
+  yeet: 5
 --- !u!212 &554698607
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -579,7 +594,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &554698610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6019,7 +6034,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
+  - {fileID: 554698608}
   - {fileID: 1259292266}
   - {fileID: 440577025}
-  - {fileID: 554698608}
   - {fileID: 1337528762}
