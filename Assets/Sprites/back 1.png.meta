@@ -134,7 +134,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      korgskiss_0: 7146004394742564724
+      korgskiss_1: 2877751528021802569
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
