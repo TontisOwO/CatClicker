@@ -46,7 +46,7 @@ public class ButtonScript : MonoBehaviour
         {
             Squish(squishness);
             time += Time.deltaTime;
-            if (time > 0.1)
+            if (time > 0.2f)
             {
                 clicking = true;
             }
