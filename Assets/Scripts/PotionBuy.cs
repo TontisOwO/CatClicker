@@ -1,14 +1,23 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
 
-public class PotionBuy
+
+public class PotionBuy : MonoBehaviour
 {
-    public void BuyPotion()
-    {
-    
-        Debug.Log("Potion bought!");
+    public Button[] potionButtons;
+    public int[] potionCosts;
+    public Counting currencyCounter; // Reference to the Counting script
 
+    private void Start()
+    {
+        
     }
 
+    public void BuyPotion(int potionIndex)
+    {
+        
+    }
 }
 
 
