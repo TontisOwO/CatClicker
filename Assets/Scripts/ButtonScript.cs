@@ -12,13 +12,14 @@ public class ButtonScript : MonoBehaviour
 
     SpriteRenderer sprite;
     Transform position;
+    Rigidbody2D myRigidbody2D;
 
     Color originalColor;
     Color slightlyDarker = new Color (0.1f, 0.1f, 0.1f, 0f);
-    Rigidbody2D myRigidbody2D;
 
     [SerializeField] float squishness = 0.1f;
     [SerializeField] float squishValue = 0.1f;
+    float time;
 
     Vector2 originalSize;
     Vector2 currentsize;
@@ -44,7 +45,11 @@ public class ButtonScript : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse0))
         {
             Squish(squishness);
-            clicking = true;
+            time += Time.deltaTime;
+            if (time > 0.1)
+            {
+                clicking = true;
+            }
         }
         else 
         {
@@ -70,7 +75,7 @@ public class ButtonScript : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             clicking = false;
-
+            time = 0;
         }
         if ( !over )
         {
