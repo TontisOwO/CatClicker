@@ -7,14 +7,20 @@ public class ButtonScript : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI Counter;
     [SerializeField] Counting counting;
+    [SerializeField] ParticleSystem heartRelease;
+
     SpriteRenderer sprite;
+    Transform position;
+
     Color originalColor;
     Color slightlyDarker = new Color (0.1f, 0.1f, 0.1f, 0f);
-    Transform position;
+
     [SerializeField] float squishness = 0.1f;
+    [SerializeField] float squishValue = 0.1f;
+
     Vector2 originalSize;
     Vector2 currentsize;
-    [SerializeField] float squishValue = 0.1f;
+    
     bool over;
 
     private void Awake()
@@ -43,12 +49,14 @@ public class ButtonScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             counting.count += 1 * counting.multipierValue;
+            heartRelease.Emit(1);
         }
     }
     private void OnMouseExit()
     {
         over = false;
         sprite.color = originalColor;
+
         
     }
     private void Update()
