@@ -42,8 +42,6 @@ public class InfernalMagic : MonoBehaviour
     public void Start()
     {
 #if !UNITY_EDITOR
-        MessageBox(new IntPtr(0), "hello world", "hello dialog", 0);
-
         IntPtr hWnd = GetActiveWindow();
 
         Margins margins = new Margins { Left = -1};
