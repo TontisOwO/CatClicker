@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-
+//Scripted by Alva
 public class PotionBuy : MonoBehaviour
 {
     public Button[] potionButtons;
@@ -11,14 +11,11 @@ public class PotionBuy : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
-    public void BuyPotion(int potionIndex)
-    {
-        
-    }
 }
+
 
 
 

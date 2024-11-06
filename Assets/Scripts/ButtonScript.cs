@@ -5,6 +5,7 @@ public class ButtonScript : MonoBehaviour
 {
     //OBS:This code does *not* work on UI elements!!! >:(
     //This is an amalgamation of code by Anton and Azure
+    //Autoclick things scripted by Alva
 
     [SerializeField] TextMeshProUGUI Counter;
     [SerializeField] Counting counting;
@@ -15,13 +16,14 @@ public class ButtonScript : MonoBehaviour
     Rigidbody2D myRigidbody2D;
 
     Color originalColor;
-    Color slightlyDarker = new Color (0.1f, 0.1f, 0.1f, 0f);
+    Color slightlyDarker = new Color(0.1f, 0.1f, 0.1f, 0f);
 
     [SerializeField] float squishness = 0.1f;
     [SerializeField] float squishValue = 0.1f;
     [SerializeField] float pickUpDelay = 0.2f;
     [SerializeField] float yeet = 2.0f;
-    [SerializeField]float time;
+    [SerializeField] float time;
+    [SerializeField] bool autoclickactive;
 
     Vector2 originalSize;
     Vector2 currentsize;
@@ -29,17 +31,19 @@ public class ButtonScript : MonoBehaviour
     bool over;
     bool clicking;
 
+    float autoclickdelay;
+
     private void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
         position = GetComponent<Transform>();
         myRigidbody2D = GetComponent<Rigidbody2D>();
-        
+
         originalColor = sprite.color;
         originalSize = position.localScale;
         currentsize = position.localScale;
     }
-    
+
     private void OnMouseOver()
     {
         over = true;
@@ -53,15 +57,14 @@ public class ButtonScript : MonoBehaviour
                 clicking = true;
             }
         }
-        else 
+        else
         {
             Squish(0);
 
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            counting.count += 1 * counting.multipierValue;
-            heartRelease.Emit(1);
+            EmitHeart();
         }
     }
     private void OnMouseExit()
@@ -69,8 +72,15 @@ public class ButtonScript : MonoBehaviour
         over = false;
         sprite.color = originalColor;
 
-        
+
     }
+
+    private void EmitHeart()
+    {
+        counting.count += 1 * counting.multipierValue;
+        heartRelease.Emit((int)(1 * counting.multipierValue));
+    }
+
     private void Update()
     {
         position.localScale = currentsize;
@@ -84,11 +94,11 @@ public class ButtonScript : MonoBehaviour
             clicking = false;
             time = 0;
         }
-        if ( !over )
+        if (!over)
         {
             Squish(0);
         }
-        if( clicking )
+        if (clicking)
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             position.position = mousePos;
@@ -103,7 +113,7 @@ public class ButtonScript : MonoBehaviour
         }
         if (position.position.y <= -10)
         {
-            position.position = new Vector2(transform.position.x,10);
+            position.position = new Vector2(transform.position.x, 10);
         }
         if (position.position.x >= 10)
         {
@@ -113,7 +123,18 @@ public class ButtonScript : MonoBehaviour
         {
             position.position = new Vector2(8.7f, position.position.y);
         }
-            
+
+        autoclickdelay += Time.deltaTime;
+
+        if (counting.autoclicking)
+        {
+            if (autoclickdelay > 0.5)
+            {
+                EmitHeart();
+                autoclickdelay = 0;
+            }
+        }
+
     }
     void Squish(float squishModifier)
     {
@@ -121,3 +142,4 @@ public class ButtonScript : MonoBehaviour
         currentsize.y = Mathf.Lerp(currentsize.y, originalSize.y - squishModifier, squishValue);
     }
 }
+
