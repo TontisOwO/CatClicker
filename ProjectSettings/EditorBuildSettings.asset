@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CatClicker.unity
     guid: 8999371cdae21b547a72af7b9fd8d228
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/squishy boi.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestScene.unity
     guid: ce2ffd272fdd11e49a87d3a452e802b8
   m_configObjects:
