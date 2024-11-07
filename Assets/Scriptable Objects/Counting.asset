@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f266642845ed005458c7365a9703dc12, type: 3}
   m_Name: Counting
   m_EditorClassIdentifier: 
-  count: 0
-  displayedNumber: 1
+  count: 110
+  displayedNumber: 110
   multipierValue: 1
+  autoclicking: 1
