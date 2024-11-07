@@ -7,6 +7,8 @@ public class ButtonScript : MonoBehaviour
     //This is an amalgamation of code by Anton and Azure
     //Autoclick things scripted by Alva
 
+    [SerializeField] Sprite[] catSprites;
+
     [SerializeField] TextMeshProUGUI Counter;
     [SerializeField] Counting counting;
     [SerializeField] ParticleSystem heartRelease;
@@ -50,6 +52,7 @@ public class ButtonScript : MonoBehaviour
         sprite.color = originalColor - slightlyDarker;
         if (Input.GetKey(KeyCode.Mouse0))
         {
+            sprite.sprite = catSprites[1];
             Squish(squishness);
             time += Time.deltaTime;
             if (time > pickUpDelay)
@@ -86,6 +89,7 @@ public class ButtonScript : MonoBehaviour
         position.localScale = currentsize;
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
+            sprite.sprite = catSprites[0];
             if (clicking)
             {
                 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
