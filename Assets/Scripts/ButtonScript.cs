@@ -128,6 +128,8 @@ public class ButtonScript : MonoBehaviour
             position.position = mousePos;
             myRigidbody2D.linearVelocity = Vector2.zero;
             dropTime = 0;
+            sprite.flipX = false;
+            sprite.flipY = false;
         }
         else
         {

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Counting
   m_EditorClassIdentifier: 
   count: 0
-  displayedNumber: 131
+  displayedNumber: 145
   multipierValue: 1
   autoclicking: 0
