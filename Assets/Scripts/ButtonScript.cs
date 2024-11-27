@@ -1,6 +1,16 @@
 using TMPro;
 using UnityEngine;
 
+public enum CatMount
+{
+    floor, floored,
+    leftWall, leftWalled,
+    rightWall, rightWalled,
+    ceiling, ceilinged,
+    air,
+    total
+}
+
 public class ButtonScript : MonoBehaviour
 {
     //OBS:This code does *not* work on UI elements!!! >:(
@@ -25,6 +35,7 @@ public class ButtonScript : MonoBehaviour
     [SerializeField] float pickUpDelay = 0.2f;
     [SerializeField] float yeet = 2.0f;
     [SerializeField] float time;
+    [SerializeField] float movementSpeed;
     [SerializeField] bool autoclickactive;
 
     Vector2 originalSize;
@@ -35,6 +46,15 @@ public class ButtonScript : MonoBehaviour
 
     float autoclickdelay;
 
+    Vector2 alteredPos;
+    [SerializeField] CatMount catState;
+    [SerializeField] CatMount catStatePrevious;
+    float catTime;
+    float waitTime;
+    float dropTime;
+    float originalGravityScale;
+    int decision;
+
     private void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
@@ -44,6 +64,7 @@ public class ButtonScript : MonoBehaviour
         originalColor = sprite.color;
         originalSize = position.localScale;
         currentsize = position.localScale;
+        originalGravityScale = myRigidbody2D.gravityScale;
     }
 
     private void OnMouseOver()
@@ -58,6 +79,7 @@ public class ButtonScript : MonoBehaviour
             if (time > pickUpDelay)
             {
                 clicking = true;
+                catState = CatMount.air;
             }
         }
         else
@@ -74,8 +96,6 @@ public class ButtonScript : MonoBehaviour
     {
         over = false;
         sprite.color = originalColor;
-
-
     }
 
     private void EmitHeart()
@@ -107,6 +127,11 @@ public class ButtonScript : MonoBehaviour
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             position.position = mousePos;
             myRigidbody2D.linearVelocity = Vector2.zero;
+            dropTime = 0;
+        }
+        else
+        {
+            dropTime += Time.deltaTime;
         }
 
         if (counting.displayedNumber != Mathf.FloorToInt(counting.count))
@@ -139,11 +164,169 @@ public class ButtonScript : MonoBehaviour
             }
         }
 
+        catTime += Time.deltaTime;
+        if (catTime >= waitTime && !clicking && dropTime >= 1)
+        {
+            decision = Random.Range(0, 3);
+            WaitTimeRandom();
+            catTime = 0;
+        }
+        else if (catTime >= waitTime)
+        {
+            catTime = 0;
+        }
+        if (catState == CatMount.ceiling || catState == CatMount.floor || 
+            catState == CatMount.rightWall || catState == CatMount.leftWall)
+        {
+            waitTime += Time.deltaTime;
+        }
+
+        if (catState != CatMount.air)
+        {
+            Action();
+        }
+
+        if (position.position.x < -7.777f && (catState == CatMount.floored || catState == CatMount.ceilinged))
+        {
+            catStatePrevious = catState;
+            catState = CatMount.leftWall;
+        }
+        else if (position.position.x > 7.777f && (catState == CatMount.floored || catState == CatMount.ceilinged))
+        {
+            catStatePrevious = catState;
+            catState = CatMount.rightWall;
+        }
+        else if (position.position.y > 3.891 && (catState == CatMount.leftWalled || catState == CatMount.rightWalled))
+        {
+            catStatePrevious = catState;
+            catState = CatMount.ceiling;
+        }
+        else if (position.position.y < -3.88f && (catState == CatMount.leftWalled || catState == CatMount.rightWalled))
+        {
+            catStatePrevious = catState;
+            catState = CatMount.floor;
+        }
+        else
+        {
+            position.rotation = Quaternion.Euler(0, position.rotation.y, 0);
+            myRigidbody2D.gravityScale = originalGravityScale;
+        }
+
+        if (catState == CatMount.leftWall || catState == CatMount.leftWalled
+            || catState == CatMount.rightWall || catState == CatMount.rightWalled)
+        {
+            position.rotation = Quaternion.Euler(0, position.rotation.y, 90);
+            myRigidbody2D.gravityScale = 0;
+        }
+        if (catState == CatMount.floor || catState == CatMount.floored)
+        {
+            position.rotation = Quaternion.Euler(0, position.rotation.y, 0);
+            myRigidbody2D.gravityScale = originalGravityScale;
+        }
+        if (catState == CatMount.ceiling || catState == CatMount.ceilinged)
+        {
+            position.rotation = Quaternion.Euler(0, position.rotation.y, 180);
+            myRigidbody2D.gravityScale = 0;
+        }
+
+        if ((position.position.y < 3.887f && position.position.y > -3.887f) && catState == CatMount.leftWall)
+        {
+            catState = CatMount.leftWalled;
+        }
+        if ((position.position.y < 3.887f && position.position.y > -3.887f) && catState == CatMount.rightWall)
+        {
+            catState = CatMount.rightWalled;
+        }
+        if ((position.position.y < -4.422 && catState == CatMount.air)
+            || (position.position.x < 7.777f || position.position.x > -7.777f) && catState == CatMount.floor)
+        {
+            catState = CatMount.floored;
+        }
+        if (position.position.x < 7.768f && position.position.x > -7.74f && catState == CatMount.ceiling)
+        {
+            catState = CatMount.ceilinged;
+        }
     }
     void Squish(float squishModifier)
     {
         currentsize.x = Mathf.Lerp(currentsize.x, originalSize.x + squishModifier, squishValue);
         currentsize.y = Mathf.Lerp(currentsize.y, originalSize.y - squishModifier, squishValue);
     }
-}
+    void WaitTimeRandom()
+    {
+        waitTime = Random.Range(1f, 2f);
+    }
 
+    void Action()
+    {
+        switch (decision)
+        {
+            case 0:
+                break;
+
+            case 1:
+                alteredPos = new Vector2(position.position.x - movementSpeed * (waitTime - catTime), position.position.y);
+                sprite.flipX = true;
+                sprite.flipY = false;
+                if (catStatePrevious == CatMount.ceilinged &&(catState == CatMount.rightWall || catState == CatMount.rightWalled))
+                {
+                    alteredPos = new Vector2(position.position.x + movementSpeed * (waitTime - catTime), position.position.y);
+                    sprite.flipX = true;
+                    sprite.flipY = false;
+                }
+                if ((position.position.x < -8.2 && (catState == CatMount.leftWall || catState == CatMount.leftWalled)) 
+                    || (catState == CatMount.ceiling && position.position.y < 4.41f))
+                {
+                    alteredPos = new Vector2(position.position.x, position.position.y + movementSpeed * (waitTime - catTime));
+                    sprite.flipX = false;
+                    sprite.flipY = true;
+                }
+                if (position.position.x > 8.3 && (catState == CatMount.rightWall || catState == CatMount.rightWalled))
+                {
+                    alteredPos = new Vector2(position.position.x, position.position.y - movementSpeed * (waitTime - catTime));
+                    sprite.flipX = true;
+                    sprite.flipY = false;
+                }
+                if (position.position.y > 4.41f && (catState == CatMount.ceiling || catState == CatMount.ceilinged))
+                {
+                    alteredPos = new Vector2(position.position.x + movementSpeed * (waitTime - catTime), position.position.y);
+                    sprite.flipX = true;
+                    sprite.flipY = false;
+                }
+                position.position = Vector2.MoveTowards(position.position, alteredPos, movementSpeed * Time.deltaTime);
+                break;
+
+            case 2:
+                alteredPos = new Vector2(position.position.x + movementSpeed * (waitTime - catTime), position.position.y);
+                sprite.flipX = false;
+                sprite.flipY = false;
+                if (catStatePrevious == CatMount.ceilinged && (catState == CatMount.leftWall ||catState == CatMount.leftWalled))
+                {
+                    alteredPos = new Vector2(position.position.x - movementSpeed * (waitTime - catTime), position.position.y);
+                    sprite.flipX = false;
+                    sprite.flipY = false;
+                }
+                if (position.position.x < -8.2 && (catState == CatMount.leftWall || catState == CatMount.leftWalled))
+                {
+                    alteredPos = new Vector2(position.position.x, position.position.y - movementSpeed * (waitTime - catTime));
+                    sprite.flipX = true;
+                    sprite.flipY = true;
+                }
+                if ((position.position.x > 8.3 && (catState == CatMount.rightWall || catState == CatMount.rightWalled))
+                    || (catState == CatMount.ceiling && position.position.y < 4.41f))
+                {
+                    alteredPos = new Vector2(position.position.x, position.position.y + movementSpeed * (waitTime - catTime));
+                    sprite.flipX = false;
+                    sprite.flipY = false;
+                }
+                if (position.position.y > 4.41f && (catState == CatMount.ceiling || catState == CatMount.ceilinged))
+                {
+                    alteredPos = new Vector2(position.position.x - movementSpeed * (waitTime - catTime), position.position.y);
+                    sprite.flipX = false;
+                    sprite.flipY = false;
+                }
+                position.position = Vector2.MoveTowards(position.position, alteredPos, movementSpeed * Time.deltaTime);
+                break;
+        }
+    }
+}
